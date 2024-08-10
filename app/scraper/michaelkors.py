@@ -98,11 +98,6 @@ class MKBag(object):
             if re.findall(dim_expression, details)
         ]
 
-        logging.info(dimension) ##
-        dimension_dict = {
-            itm: [dim[0] for dim in dimension[0] if itm in dim][0] 
-            for itm in ['W', 'H', 'D']
-        }
-        extra_data['dimension'] = dimension_dict
+        extra_data['dimension'] = {item[1]: item[0] for item in dimension[0]} if dimension else {}
 
         return extra_data
