@@ -1,16 +1,18 @@
-FROM python:3.12 as base
+FROM ubuntu as base
 
 WORKDIR /usr/src/app
 
 ADD app ./
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-&& echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
-&& apt-get update \
-&& apt-get install -y --no-install-recommends google-chrome-stable \
-&& apt-get remove -y google-chrome-stable \
-&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends firefox python3 python3-pip python3.12-venv
 
-ENTRYPOINT [ "/bin/bash", "-c" ]
+RUN python3 -m venv venv
+RUN . venv/bin/activate
+RUN venv/bin/pip3 install -r requirements.txt
+
+RUN echo "source /usr/src/app/venv/bin/activate" >> /root/.bashrc
+
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
+CMD ["bash"]

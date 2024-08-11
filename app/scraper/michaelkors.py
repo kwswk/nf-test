@@ -2,7 +2,7 @@ import re
 import logging
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup, ResultSet
 from functools import partial
 from datetime import datetime
@@ -13,10 +13,10 @@ logging.basicConfig(level=logging.INFO)
 class MKBag(object):
 
     def __init__(self):
-        chrome_options = Options()
-        chrome_options.add_argument("--headless=new")
-        chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-        self.driver = webdriver.Chrome(options=chrome_options)
+        driver_options = Options()
+        driver_options.add_argument("--headless")
+        driver_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
+        self.driver = webdriver.Firefox(options=driver_options)
 
     def browse_web(
         self,
