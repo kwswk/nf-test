@@ -2,7 +2,7 @@ import re
 import logging
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup, ResultSet
 from functools import partial
 from datetime import datetime
@@ -14,9 +14,11 @@ class MKBag(object):
 
     def __init__(self):
         driver_options = Options()
-        driver_options.add_argument("--headless")
+        driver_options.add_argument("--no-sandbox")
+        driver_options.add_argument("--headless=new")
+        driver_options.add_argument("--disable-dev-shm-usage")
         driver_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-        self.driver = webdriver.Firefox(options=driver_options)
+        self.driver = webdriver.Chrome(options=driver_options)
 
     def browse_web(
         self,
