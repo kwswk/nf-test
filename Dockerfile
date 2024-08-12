@@ -1,5 +1,9 @@
 FROM --platform=linux/amd64 ubuntu as base
 
+ARG GET_ALL_DETAILS=False
+ARG S3_BUCKET
+ARG S3_PREFIX 
+
 WORKDIR /usr/src/app
 
 ADD app ./
@@ -19,4 +23,4 @@ RUN venv/bin/pip3 install -r requirements.txt
 RUN echo "source /usr/src/app/venv/bin/activate" >> /root/.bashrc
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
-CMD ["/usr/src/app/venv/bin/python -m main"]
+CMD ["/usr/src/app/venv/bin/python -m main --get_all_details ${GET_ALL_DETAILS} --s3_bucket ${S3_BUCKET} --s3_prefix ${S3_PREFIX}"]
