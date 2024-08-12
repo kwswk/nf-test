@@ -1,6 +1,9 @@
 ## Intro
 The test is completed with Python + Selenium
 
+## Tested Environment
+1. 
+
 ## Local Environment Setup (On Mac)
 1. Please have Google Chrome installed on your laptop
 2. Create an python virtual environment with `python -m venv venv` 
@@ -25,3 +28,18 @@ The test is completed with Python + Selenium
   2. Run the docker
 
 ## Proposed AWS deployment
+**Architecture**
+![alt text](<NF Test.drawio.svg>)
+
+**ECR Push**
+
+Pre-requisite:
+- IAM user account with permission to upload docker layers
+- An new ECR repository called `mk-bags`
+
+Steps:
+
+1. Logon the ECR repo with command provided on AWS portal `aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin {account}.dkr.ecr.ap-southeast-1.amazonaws.com`
+2. Tag the image `docker tag mk-bags:latest {account}.dkr.ecr.ap-southeast-1.amazonaws.com/mk-bags:latest`
+3. Push to ECR `docker push {account}.dkr.ecr.ap-southeast-1.amazonaws.com/mk-bags:latest`
+
