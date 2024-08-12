@@ -27,10 +27,12 @@ def upload_to_s3(
     else:
         s3 = boto3.client('s3')
 
-    logging(f'Uploading {file_path} to s3://{s3_bucket}/{s3_prefix}')
+    logging.info(f'Uploading {file_path} to s3://{s3_bucket}/{s3_prefix}')
 
     s3.upload_file(
         file_path, 
         s3_bucket, 
         s3_prefix,
     )
+
+    logging.info('Uploaded')

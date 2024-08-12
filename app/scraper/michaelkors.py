@@ -44,7 +44,7 @@ class MKBag(object):
         else:
             return [item.get(get_item) for item in found]
 
-    def item_data_constructor(self, raw_result: ResultSet, get_all_details: bool) -> dict:
+    def item_data_constructor(self, raw_result: ResultSet, get_all_details: bool = False) -> dict:
 
         extract_info_partial = partial(self.extract_item_info, raw_result=raw_result)
         product_link=f"https://www.michaelkors.global/{extract_info_partial(path='div.pdp-link a', get_item='href')[0]}"
@@ -65,8 +65,8 @@ class MKBag(object):
             timestamp=datetime.now(),
         )
 
-        if get_all_details:
-            logging.info(f'Pulling dtailed information of item: {item_name}')
+        if get_all_details == True:
+            logging.info(f'Pulling detailed information of item: {item_name}')
             extra_details = self.get_item_details(product_link)
             basic_details.update(extra_details)
         
