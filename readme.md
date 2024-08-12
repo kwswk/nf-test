@@ -89,6 +89,14 @@ Steps:
    ![alt text](src/ecs-task-log.png)
 
 
+**4.1/ ECS Task Schedule Run**
+
+1. Once step 4 has been tested successfully, you may create a schedule task in Cluster page
+   ![alt text](src/ecs-schedule.png)
+2. Set the interval between runs ![alt text](src/ecs-schedule-1.png)
+3. Follow section #4 and fill the task details
+4. Done
+
 **5/ Data Check**
 
 1. By default, data will be uploaded to S3
