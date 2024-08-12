@@ -12,7 +12,7 @@ def get_df(data: dict) -> pd.DataFrame:
 def get_json(data, file_name: str = 'bags-data.json'):
     logging.info(f'Converting into Json @ {file_name}')
     df = get_df(data)
-    return df.to_json(file_name)
+    return df.to_json(file_name, orient='records')
 
 
 def upload_to_s3(

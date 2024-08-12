@@ -1,8 +1,9 @@
 ## Intro
-The test is completed with Python + Selenium
+I use Python + Selenium + Chrome to scrap data from Michael Kors website. The data will be then transformed into JSON and upload to S3. Below provides proposed soultion to deploy on AWS as well
 
 ## Tested Environment
-1. 
+1. [Notebook](app/scraper.ipynb) working in both ARM & Intel Macbook
+2. Docker run only works in x86_64 machine
 
 ## Local Environment Setup (On Mac)
 1. Please have Google Chrome installed on your laptop
@@ -47,15 +48,48 @@ Pre-requisite:
 - VPC and subnets are well prepared
 
 **1/ ECR Push**
-Steps:
 
+Steps:
 1. Logon the ECR repo with command provided on AWS portal `aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin {account}.dkr.ecr.ap-southeast-1.amazonaws.com`
 2. Tag the image `docker tag mk-bags:latest {account}.dkr.ecr.ap-southeast-1.amazonaws.com/mk-bags:latest`
 3. Push to ECR `docker push {account}.dkr.ecr.ap-southeast-1.amazonaws.com/mk-bags:latest`
 
-**2/ Lambda Setup**
+**2/ ECS Task Definition Setup**
 
-1. Create Function > Container Image > Pick image from ECR "mk-bags"
-![alt text](src/lambda-setup-1.png)
-2. No overriding needed
+1. Create Task defintion ![alt text](src/ecs-task-def-1.png)
+   1. Launch Type: Fargate
+   2. OS: Linux/X86_64
+   3. roles: A role who has ECR, Cloudwatch and S3 access
+2. Copy the ECR url ![alt text](src/ecs-task-def-2.png)
+3. Create
 
+
+**3/ ECS Cluster Set Up**
+
+1. Create a ECS Cluster with desired name
+2. Infrastructure: Fargate
+3. (Optional) Recommended to turn on "Use Container Insights"
+![alt text](src/ecs-cluster.png)
+
+
+**4/ ECS Task Run**
+
+1. head to the cluster you created in section #3
+2. Test if the container works by "Run new task" under "Tasks" tab
+3. Run a new task with below configs:
+   1. Launch type: FARGATE
+   2. Application Type: Task
+   3. Family: Refer to section #2
+4. Configurate Network setting probably
+   ![alt text](src/ecs-run-task.png)
+5. Create
+6. A task will be created under "Tasks" section 
+   ![alt text](src/ecs-task.png)
+7. Click into the task and check the log if the scraper is working!
+   ![alt text](src/ecs-task-log.png)
+
+
+**5/ Data Check**
+
+1. By default, data will be uploaded to S3
+2. You can either create a table and query the data using athena
