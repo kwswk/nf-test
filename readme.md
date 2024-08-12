@@ -30,13 +30,23 @@ The test is completed with Python + Selenium
 ## Proposed AWS deployment
 **Architecture**
 ![alt text](<src/NF Test.drawio.svg>)
+We could schedule run the container using either:
+  1. Lambda + ECR
+  2. ECS Fargate + ECR
 
-**1/ ECR Push**
+Yet I highly recommend you take go approach #2 due to 15 min and caching limitation on Lambda.  The workflow is simple:
+   1. Push ECR image to ECR repo
+   2. Create Task definition in ECS
+   3. Create ECS cluster for the job
+   4. Create scheudle task under the ECS cluster
 
 Pre-requisite:
 - IAM user account with permission to upload docker layers
+- IAM role with necessary permission to pull ECR and upload data to s3
 - An new ECR repository called `mk-bags`
+- VPC and subnets are well prepared
 
+**1/ ECR Push**
 Steps:
 
 1. Logon the ECR repo with command provided on AWS portal `aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin {account}.dkr.ecr.ap-southeast-1.amazonaws.com`

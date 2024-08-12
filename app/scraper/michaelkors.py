@@ -19,7 +19,9 @@ class MKBag(object):
         driver_options.add_argument("--headless=new")
         driver_options.add_argument("--disable-dev-shm-usage")
         driver_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-        self.driver = webdriver.Chrome(options=driver_options)
+        self.driver = webdriver.Chrome(
+            options=driver_options,
+        )
 
     def browse_web(
         self,
