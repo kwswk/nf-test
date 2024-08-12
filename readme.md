@@ -18,6 +18,8 @@ I use Python + Selenium + Chrome to scrap data from Michael Kors website. The da
   2.  Locate the notbook I've prepared [app/scraper.ipynb](app/scraper.ipynb) and Run ALL
   3.  You will get the result dataframe in the last cell
 
+- Docker Run
+  `docker run -t -e GET_ALL_DETAILS=0 -e S3_BUCKET=s3_bucket -e S3_PREFIX=s3_prefix mk-bags`
 
 ## Docker deployment
 - The scraper is packed into the container as well as to ease deployment process
@@ -61,7 +63,14 @@ Steps:
    2. OS: Linux/X86_64
    3. roles: A role who has ECR, Cloudwatch and S3 access
 2. Copy the ECR url ![alt text](src/ecs-task-def-2.png)
-3. Create
+3. Set Up 3 Environment variables:
+   1. GET_ALL_DETAILS
+      1. 0: Basic only
+      2. 1: All product details
+   2. S3_BUCKET: Target S3 bucket
+   3. S3_PREFIX: Target S3 prefix (including file name)
+   ![alt text](src/ecs-task-def-3.png)
+4. Create
 
 
 **3/ ECS Cluster Set Up**

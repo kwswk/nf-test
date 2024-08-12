@@ -1,9 +1,5 @@
 FROM --platform=linux/amd64 ubuntu as base
 
-ENV GET_ALL_DETAILS=0
-ENV S3_BUCKET=sample_bucket
-ENV S3_PREFIX=bags-data.json
-
 WORKDIR /usr/src/app
 
 ADD app ./
@@ -22,5 +18,4 @@ RUN venv/bin/pip3 install -r requirements.txt
 
 RUN echo "source /usr/src/app/venv/bin/activate" >> /root/.bashrc
 
-ENTRYPOINT ["/bin/bash", "-l", "-c"]
-CMD /usr/src/app/venv/bin/python -m main --get_all_details $GET_ALL_DETAILS --s3_bucket $S3_BUCKET --s3_prefix $S3_PREFIX
+CMD ["/bin/bash", "-c", "/usr/src/app/venv/bin/python -m main --get_all_details $GET_ALL_DETAILS --s3_bucket $S3_BUCKET --s3_prefix $S3_PREFIX"]
