@@ -29,9 +29,9 @@ The test is completed with Python + Selenium
 
 ## Proposed AWS deployment
 **Architecture**
-![alt text](<NF Test.drawio.svg>)
+![alt text](<src/NF Test.drawio.svg>)
 
-**ECR Push**
+**1/ ECR Push**
 
 Pre-requisite:
 - IAM user account with permission to upload docker layers
@@ -42,4 +42,10 @@ Steps:
 1. Logon the ECR repo with command provided on AWS portal `aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin {account}.dkr.ecr.ap-southeast-1.amazonaws.com`
 2. Tag the image `docker tag mk-bags:latest {account}.dkr.ecr.ap-southeast-1.amazonaws.com/mk-bags:latest`
 3. Push to ECR `docker push {account}.dkr.ecr.ap-southeast-1.amazonaws.com/mk-bags:latest`
+
+**2/ Lambda Setup**
+
+1. Create Function > Container Image > Pick image from ECR "mk-bags"
+![alt text](src/lambda-setup-1.png)
+2. No overriding needed
 

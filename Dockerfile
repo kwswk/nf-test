@@ -19,4 +19,4 @@ RUN venv/bin/pip3 install -r requirements.txt
 RUN echo "source /usr/src/app/venv/bin/activate" >> /root/.bashrc
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
-CMD ["bash"]
+CMD ["/usr/src/app/venv/bin/python -m main"]
